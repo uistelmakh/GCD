@@ -8,7 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var label: UILabel!
+
+    @IBOutlet weak var tableView: UITableView!
     
     var networkManager = NetworkManager()
     
@@ -16,14 +17,26 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    }
-
-    @IBAction func dowloadPosts(_ sender: Any) {
+        tableView.delegate = self
+        tableView.dataSource = self
         networkManager.getAllPosts { (posts) in
             DispatchQueue.main.async { [weak self] in
-                self?.label.text = "posts has been downloaded"
+                
             }
         }
     }
+
 }
 
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    
+}

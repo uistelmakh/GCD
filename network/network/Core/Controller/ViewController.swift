@@ -34,7 +34,25 @@ class ViewController: UIViewController {
         }
        
     }
+    @IBAction func createPost(_ sender: Any) {
+        
+        var post = Post(userId: 11, title: "myTitle", body: "myBody")
+        
+        networkManager.postCreatePost(post) { serverPost in
+            
+            post.id = serverPost.id
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Внимание", message:  "Ваш пост создан!", preferredStyle: .alert)
 
+                self.present(alert, animated: true, completion: nil)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    alert.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -50,6 +68,5 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableViewCell()
     }
-    
     
 }

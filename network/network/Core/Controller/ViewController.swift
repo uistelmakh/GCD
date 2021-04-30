@@ -26,11 +26,17 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         
         
-        networkManager.getAllPosts { [weak self](posts) in
+//        networkManager.getAllPosts { [weak self](posts) in
+//            DispatchQueue.main.async {
+//                self?.posts = posts
+//            }
+//
+//        }
+        
+        networkManager.getPostsBy(userId: 3) { [weak self](posts) in
             DispatchQueue.main.async {
                 self?.posts = posts
             }
-            
         }
        
     }

@@ -31,7 +31,7 @@ struct NetworkManager {
                 if error != nil {
                     print("error")
                 } else {
-                    if let response = response as? HTTPURLResponse,
+                    if let resp = response as? HTTPURLResponse, resp.statusCode == 200,
                        let responseData = data{
                         let posts = try? JSONDecoder().decode([Post].self, from: responseData)
                         comlitionHandler(posts ?? [])
@@ -46,7 +46,7 @@ struct NetworkManager {
         let responseData = try? JSONEncoder().encode(post)
         guard let url = URL(string: baseURL + APIs.posts.rawValue),
               let data = responseData else { return }
-        let request = MutableURLRequest(url: url)
+        var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.POST.rawValue
         request.httpBody = data
         request.setValue("\(data.count)", forHTTPHeaderField: "Content-Lengh")
